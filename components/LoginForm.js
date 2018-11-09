@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Text, TextInput,StyleSheet, View, ActivityIndicator, Button } from 'react-native';
 import firebase from 'firebase';
 import SignUpForm from './SignUpForm';
-
 export default class LoginForm extends Component {
+
 
   constructor(props) {
     super(props);
@@ -47,8 +47,8 @@ export default class LoginForm extends Component {
       switch(this.state.hasLogin) {
           case true:
           return (
-            <View>
-                <Text>Login</Text>
+            <View style={styles.container}>
+                <Text style={styles.LoginContent}>Login</Text>
                 <TextInput
                 label='Email'
                   placeholder='user@mail.com'
@@ -93,9 +93,15 @@ export default class LoginForm extends Component {
 }
 
 const styles = StyleSheet.create({
-  errorTextStyle: {
-    fontSize: 20,
-    alignSelf: 'center',
-    color: 'red'
-  }
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  LoginContent: {
+    fontSize: 24,
+
+  },
 });
+
