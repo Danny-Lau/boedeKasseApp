@@ -20,6 +20,7 @@ const Fine = createStackNavigator({
 
 const TeamsFine = createStackNavigator({
   TeamFine: { screen: TeamsFineScreen },
+  Profile: {screen: ProfileScreen},
 });
 
 export default createBottomTabNavigator(
