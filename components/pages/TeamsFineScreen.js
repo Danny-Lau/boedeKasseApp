@@ -39,6 +39,8 @@ export default class TeamsFineScreen extends React.Component {
 
 
 
+
+
   render() {
     if (this.state.isLoading) {
       return (
@@ -56,7 +58,7 @@ export default class TeamsFineScreen extends React.Component {
             title={item.Name}
             titleStyle={{ color: 'black', fontWeight: 'bold' }}
             subtitleStyle={{ color: 'tomato' }}
-            subtitle={item.Fine}
+            subtitle={item.currentFine}
             chevronColor='tomato'
             onPress={() => this.props.navigation.navigate('Profile', item)}
             containerStyle={{ backgroundColor: 'white' }}

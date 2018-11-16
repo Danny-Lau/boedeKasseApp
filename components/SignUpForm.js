@@ -9,7 +9,8 @@ export default class SignUpForm extends Component {
     this.state = {
       email: '', 
       password: '', 
-      loading: false   
+      loading: false,
+      userId: ''   
     }
   }
 
@@ -33,7 +34,9 @@ export default class SignUpForm extends Component {
       loading: false, 
       error: '' });
     alert("Din bruger blev oprettet");
-  }
+    
+    }
+  
 
   onSignUpFailed(err) {
     this.setState({ 
@@ -52,6 +55,7 @@ export default class SignUpForm extends Component {
             value={this.state.email}
             onChangeText={email => this.setState({ email })}
           />
+
           <TextInput
             placeholder='password'
             value={this.state.password}

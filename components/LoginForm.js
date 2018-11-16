@@ -26,6 +26,7 @@ export default class LoginForm extends Component {
 
     firebase.auth().signInWithEmailAndPassword(email, password)
         .then(this.onLoginSuccess.bind(this))
+
         .catch(this.onLoginFailed.bind(this));
   }
 
@@ -34,7 +35,7 @@ export default class LoginForm extends Component {
       email: '', 
       password: '', 
       loading: false, 
-      error: '' });
+      error: '' })
   }
 
   onLoginFailed(err) {
@@ -67,6 +68,8 @@ export default class LoginForm extends Component {
       
                 {this.renderButton()}
                 <Button title='Sign up' onPress={() => this.setState({hasLogin : false})}></Button>
+            
+                
             </View>
           );
 

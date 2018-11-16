@@ -1,22 +1,53 @@
 import React from 'react';
-import { StyleSheet, ActivityIndicator, FlatList, View, Text, Button, Image } from 'react-native';
-import { ListItem } from 'react-native-elements';
+import { StyleSheet, ActivityIndicator, TextInput, View, Text, Button} from 'react-native';
+import { ListItem, ListView} from 'react-native-elements';
+import firebase from 'firebase';
 
 
-export default class HomeScreen extends React.Component {
+export default class ProfileScreen extends React.Component {
+  
 
   static navigationOptions = {
     title: "Min Profil"
   };
-
-  render() {
-    return (
-      <View style={styles.container}>
-         <Text>Min Profil</Text> 
-      </View>
-    );
+  constructor(props) {
+    super(props);
+    this.state ={
+      username:'',
+      isLoading: true
+    }
   }
+
+  componentDidMount(){
+    this.registerUserInfo();
+
+  }
+ 
+  registerUserInfo() {
+    var userId = firebase.auth().currentUser.uid;
+    var username = this.state.username;
+    var mail = firebase.auth().currentUser.email;
+
+    firebase.database().ref().child('users').child(userId).push({
+      username: username,
+      email: mail
+    })
+  }
+
+
+
+  render() {     
+          return (
+            <View>
+            <Text>Hej</Text>
+            </View>
+            
+        );
+        
+    }
 }
+
+
   const styles = StyleSheet.create({
     container: {
       flex: 1,
