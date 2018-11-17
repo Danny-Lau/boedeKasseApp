@@ -2,8 +2,9 @@ import React from 'react';
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation';
 import ProfileScreen from './ProfileScreen';
 import SettingsScreen from './SettingsScreen';
-import TeamsFineScreen from './TeamsFineScreen'; 
-import FineScreen from './FineScreen'
+import TeamsScreen from './TeamsScreen'; 
+import FineScreen from './FineScreen';
+import SpecificTeamsFineScreen from './SpecificTeamFineScreen';
 import { Ionicons } from '@expo/vector-icons';
 
 const Profile = createStackNavigator({
@@ -19,8 +20,8 @@ const Fine = createStackNavigator({
 });
 
 const TeamsFine = createStackNavigator({
-  TeamFine: { screen: TeamsFineScreen },
-  Profile: {screen: ProfileScreen},
+  TeamFine: { screen: TeamsScreen },
+  SpecificTeam: { screen: SpecificTeamsFineScreen },
 });
 
 export default createBottomTabNavigator(

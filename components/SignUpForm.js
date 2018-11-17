@@ -33,9 +33,17 @@ export default class SignUpForm extends Component {
       password: '', 
       loading: false, 
       error: '' });
-    alert("Din bruger blev oprettet");
     
-    }
+
+    var userId = firebase.auth().currentUser.uid;
+    var mail = firebase.auth().currentUser.email;
+
+    firebase.database().ref().child('users').child(userId).set({
+      email: mail
+    })
+    alert("Din bruger blev oprettet");
+  }
+    
   
 
   onSignUpFailed(err) {

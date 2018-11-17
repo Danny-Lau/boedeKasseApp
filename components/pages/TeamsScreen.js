@@ -7,7 +7,7 @@ import firebase from 'firebase';
 export default class TeamsFineScreen extends React.Component {
 
   static navigationOptions = {
-    title: "Følgender personer skylder:"
+    title: "Mine hold"
   };
 
   constructor(props) {
@@ -19,19 +19,19 @@ export default class TeamsFineScreen extends React.Component {
 
   componentDidMount() {
     this.getUsersFineFromApiAsync();
-
   }
 
   getUsersFineFromApiAsync(){
+    var userId = firebase.auth().currentUser.uid;
 
     var that = this;
 
-    return firebase.database().ref('Players').on('value', function (snapshot){
-      var players = Object.values(snapshot.val());
+    return firebase.database().ref('users/' + userId + '/teams/').on('value', function (snapshot){
+      var teams = Object.values(snapshot.val());
 
       that.setState({
         isLoading: false,
-        dataSource: players,
+        dataSource: teams,
       });
     });
       
@@ -55,12 +55,10 @@ export default class TeamsFineScreen extends React.Component {
         data={this.state.dataSource}
         renderItem={({ item }) =>
           <ListItem
-            title={item.Name}
+            title={item.name}
             titleStyle={{ color: 'black', fontWeight: 'bold' }}
-            subtitleStyle={{ color: 'tomato' }}
-            subtitle={item.currentFine}
             chevronColor='tomato'
-            onPress={() => this.props.navigation.navigate('Profile', item)}
+            onPress={() => this.props.navigation.navigate('SpecificTeam', item)}
             containerStyle={{ backgroundColor: 'white' }}
           />
         }

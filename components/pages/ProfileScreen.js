@@ -14,35 +14,38 @@ export default class ProfileScreen extends React.Component {
     super(props);
     this.state ={
       username:'',
+      mail:'',
       isLoading: true
     }
   }
 
-  componentDidMount(){
-    this.registerUserInfo();
-
-  }
  
-  registerUserInfo() {
+ 
+ 
+  showUserPofile() {
     var userId = firebase.auth().currentUser.uid;
-    var username = this.state.username;
-    var mail = firebase.auth().currentUser.email;
 
-    firebase.database().ref().child('users').child(userId).push({
-      username: username,
-      email: mail
+    firebase.database().ref('users/' + userId).on('value', (snapshot) => {
+      const user = snapshot.val();
+      this.mail = user.email;
+       
+      
+
     })
   }
 
 
 
-  render() {     
-          return (
-            <View>
-            <Text>Hej</Text>
-            </View>
-            
-        );
+  render() {   
+    this.showUserPofile()
+    const mail = mail
+    return(
+      <View>
+      <Text>mailen er: {mail}</Text>
+    </View>
+
+    );
+
         
     }
 }
