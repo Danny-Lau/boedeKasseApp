@@ -13,9 +13,7 @@ export default class SpecificTeamFineScreen extends React.Component {
         super(props);
         this.state = {
           isloading: true,
-   
-          
-          
+    
         }  
       }
 
@@ -62,7 +60,7 @@ export default class SpecificTeamFineScreen extends React.Component {
                 subtitleStyle={{ color: 'tomato' }}
                 subtitle={item.fine}    
                 chevronColor='tomato'
-                onPress={() => this.props.navigation.navigate('SpecificTeam', item)}
+                onPress={() => this.props.navigation.navigate('SpecificUser', item)}
                 containerStyle={{ backgroundColor: 'white' }}
               />
             }

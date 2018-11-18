@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, ActivityIndicator, FlatList, View, Text, Button, Image } from 'react-native';
+import { StyleSheet, ActivityIndicator, FlatList, View, Text, Button} from 'react-native';
 import { ListItem } from 'react-native-elements';
 import firebase from 'firebase';
 
@@ -64,6 +64,7 @@ export default class TeamsFineScreen extends React.Component {
         }
         keyExtractor={(item, index) => index.toString()}
       />
+      <Button title='Opret nyt hold' onPress= {() => this.props.navigation.navigate('CreateTeam')}/>
       </View>
     );
 

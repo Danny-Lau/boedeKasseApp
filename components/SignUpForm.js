@@ -10,7 +10,9 @@ export default class SignUpForm extends Component {
       email: '', 
       password: '', 
       loading: false,
-      userId: ''   
+      userId: '',
+      teams:'',
+      username:''   
     }
   }
 
@@ -37,9 +39,13 @@ export default class SignUpForm extends Component {
 
     var userId = firebase.auth().currentUser.uid;
     var mail = firebase.auth().currentUser.email;
+    var teams = this.state.team;
+    var username = this.state.username;
 
     firebase.database().ref().child('users').child(userId).set({
-      email: mail
+      email: mail,
+      teams: teams,
+      username: username
     })
     alert("Din bruger blev oprettet");
   }
@@ -62,6 +68,13 @@ export default class SignUpForm extends Component {
             placeholder='user@mail.com'
             value={this.state.email}
             onChangeText={email => this.setState({ email })}
+          />
+
+          <TextInput
+          label='Username'
+            placeholder='Brugernavn'
+            value={this.state.username}
+            onChangeText={username => this.setState({ username })}
           />
 
           <TextInput

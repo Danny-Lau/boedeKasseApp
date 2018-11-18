@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, TextInput,StyleSheet, View, ActivityIndicator, Button } from 'react-native';
+import { Text, TextInput, StyleSheet, View, ActivityIndicator, Button } from 'react-native';
 import firebase from 'firebase';
 import SignUpForm from './SignUpForm';
 export default class LoginForm extends Component {
