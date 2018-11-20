@@ -18,29 +18,71 @@ export default class CreateTeamScreen extends React.Component {
     }
   }
 
+  executefunction(){
+    this.createTeam();
+    this.props.navigation.navigate('AdminFine');
+  }
+
   createTeam(){
       const userId = firebase.auth().currentUser.uid;
       const teamName = this.state.teamName;
       const members = this.state.members;
 
+      //Henter brugerens username
+      return firebase.database().ref('users/' + userId + '/username').on('value', function (snapshot){
+        var username  = snapshot.val();
+
+
+
+
+      //Opretter ny bødekasse i databasen
       firebase.database().ref('teams/').push({
           members: members,
           name: teamName,
           adminID: userId 
-      }).then((data) => {
-          alert('Dit hold blev oprettet');
-          this.props.navigation.navigate('AdminFine')
-      }).catch((error) => {
-          console.log('error ' , error )
-      })
-        
-    }
+      
+      //Henter de autogenreret teamID 
+      //https://stackoverflow.com/questions/16637035/in-firebase-when-using-push-how-do-i-pull-the-unique-id
+      }).then((snap) => {
+        const key = snap.key 
 
+
+        //Tilføjer bødekassen til bruger id´et        
+        firebase.database().ref('users/' + userId + '/teams').push({
+          name: teamName,
+          teamID: key,
+          
+        }).then((data)=>{
+          
+
+
+          //Tilføjer brugeren til bødekassen
+          firebase.database().ref('teams/' + key + '/members').push({
+            name: username,
+            fine: 0,
+          
+          }).then((data) => {
+            alert('Dit hold blev oprettet');
+
+              
+          
+          }).catch((error) => {
+            console.log('error ' , error )
+          })
+        
+        }).catch((error) => {
+            console.log('error ' , error )
+        })
+
+      }).catch((error) => {
+        console.log('error ' , error )
+    })    
+  })
+}
 
 
   render() {
-   
-    return (
+       return (
         <View style={styles.container}>
             <Text style={styles.loginContent}>Indtast holdnavn</Text>
                 <TextInput 
@@ -49,7 +91,7 @@ export default class CreateTeamScreen extends React.Component {
                   value={this.state.teamName}
                   onChangeText={teamName => this.setState({ teamName })}
                 />
-                <Button title='Opret mit hold' onPress={this.createTeam.bind(this) }></Button>
+                <Button title='Opret mit hold' onPress={this.executefunction.bind(this) }></Button>
         
         </View>
     );

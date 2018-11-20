@@ -13,7 +13,9 @@ export default class TeamsFineScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isloading: true
+      isloading: true,
+      joinedTeam: false,
+
     }  
   }
 
@@ -27,14 +29,23 @@ export default class TeamsFineScreen extends React.Component {
     var that = this;
 
     return firebase.database().ref('users/' + userId + '/teams/').on('value', function (snapshot){
-      var teams = Object.values(snapshot.val());
-
-      that.setState({
-        isLoading: false,
-        dataSource: teams,
-      });
-    });
+      teams = snapshot.val()
       
+        if(teams == undefined || null){
+          that.setState({
+            joinedTeam: false
+          })
+
+        } else {
+          teams = Object.values(snapshot.val());
+          that.setState({
+            isLoading: false,
+            dataSource: teams,
+            joinedTeam: true,
+  
+          });
+        }
+    });   
   }
 
   render() {
@@ -45,25 +56,38 @@ export default class TeamsFineScreen extends React.Component {
         </View>     
       )
     }
-    return (
-      <View>
-      <FlatList
-        data={this.state.dataSource}
-        renderItem={({ item }) =>
-          <ListItem
-            title={item.name}
-            titleStyle={{ color: 'black', fontWeight: 'bold' }}
-            chevronColor='tomato'
-            onPress={() => this.props.navigation.navigate('SpecificTeam', item)}
-            containerStyle={{ backgroundColor: 'white' }}
-          />
+    switch (this.state.joinedTeam) {
+      case true: {
+      return (
+        <View>
+        <FlatList
+          data={this.state.dataSource}
+          renderItem={({ item }) =>
+            <ListItem
+              title={item.name}
+              titleStyle={{ color: 'black', fontWeight: 'bold' }}
+              chevronColor='tomato'
+              onPress={() => this.props.navigation.navigate('SpecificTeam', item)}
+              containerStyle={{ backgroundColor: 'white' }}
+            />
+          }
+          keyExtractor={(item, index) => index.toString()}
+        />
+        </View>
+      );
         }
-        keyExtractor={(item, index) => index.toString()}
-      />
-      <Button title='Opret nyt hold' onPress= {() => this.props.navigation.navigate('CreateTeam')}/>
-      </View>
-    );
 
+      case false:{
+      return(
+        <View>
+          <Text>Du er desværre ikke tilmeldt nogle bødekasser endnu</Text>
+        </View>
+      )
+      }
+
+    }
+      
+     
   }
 }
 
