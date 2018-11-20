@@ -34,15 +34,15 @@ export default class SignUpForm extends Component {
       email: '', 
       password: '', 
       loading: false, 
-      error: '' });
+      error: '' 
+    });
     
-
     var userId = firebase.auth().currentUser.uid;
     var mail = firebase.auth().currentUser.email;
-    var teams = this.state.team;
+    var teams = this.state.teams;
     var username = this.state.username;
 
-    firebase.database().ref().child('users').child(userId).push({
+    firebase.database().ref().child('users').child(userId).set({
       email: mail,
       teams: teams,
       username: username
