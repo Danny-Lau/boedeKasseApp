@@ -12,7 +12,8 @@ export default class AdminFineScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isloading: true
+      isloading: true,
+      isAdmin: false
     }  
   }
 
@@ -22,25 +23,28 @@ export default class AdminFineScreen extends React.Component {
    
   
   getMyOwnTeams(){
+
     var userId = firebase.auth().currentUser.uid;
     var that = this;
 
-    return firebase.database().ref('teams/').on('value',function(snapshot){
-      var myTeams = snapshot.child('adminID').val();
+    return firebase.database().ref('users/' + userId + '/adminTeams').on('value', function (snapshot){
+      var myTeams = snapshot.val()
+      
+        if(myTeams == undefined || null){
+          that.setState({
+            isAdmin: false
+          })
 
-      if (myTeams != userId){
-        return(
-          <View>
-            <Text>Du har ikke oprettet nogle bødekasser endnu!</Text>
-          </View>
-        )
-      }
-
-      that.setState({
-        isloading:false,
-        datasource: myTeams
-      });
-    });
+        } else {
+          myTeams = Object.values(snapshot.val());
+          that.setState({
+            isLoading: false,
+            dataSource: myTeams,
+            isAdmin: true,
+  
+          });
+        }
+    });   
   }
   
   render() {
@@ -51,26 +55,42 @@ export default class AdminFineScreen extends React.Component {
         </View>     
       )
     }
-    return (
-      <View>
-      <FlatList
-        data={this.state.dataSource}
-        renderItem={({ item }) =>
-          <ListItem
-            title={item.name}
-            titleStyle={{ color: 'black', fontWeight: 'bold' }}
-            chevronColor='tomato'
-            onPress={() => this.props.navigation.navigate('SpecificTeam', item)}
-            containerStyle={{ backgroundColor: 'white' }}
-          />
-        }
-        keyExtractor={(item, index) => index.toString()}
-      />
 
-      <Button title='Opret nyt hold' onPress= {() => this.props.navigation.navigate('CreateTeam')}/>
-      </View>
-    );
-  }
+    switch(this.state.isAdmin){
+      case true: {
+        return (
+          <View>
+          <FlatList
+            data={this.state.dataSource}
+            renderItem={({ item }) =>
+              <ListItem
+                title={item.name}
+                titleStyle={{ color: 'black', fontWeight: 'bold' }}
+                chevronColor='tomato'
+                onPress={() => this.props.navigation.navigate('SpecificTeam', item)}
+                containerStyle={{ backgroundColor: 'white' }}
+              />
+            }
+            keyExtractor={(item, index) => index.toString()}
+          />
+    
+          <Button title='Opret nyt hold' onPress= {() => this.props.navigation.navigate('CreateTeam')}/>
+          </View>
+        );
+      }
+
+      case false: {
+        return (
+          <View>
+          <Text>Du har ikke oprette nogle bøderkasser endnu. </Text>
+          <Text>Du kan derfor ikke administrere nogle bødekasser </Text>
+        </View>
+        )
+      }
+    }
+    
+      
+    }  
 }
   const styles = StyleSheet.create({
     container: {

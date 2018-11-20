@@ -45,7 +45,9 @@ export default class SignUpForm extends Component {
     firebase.database().ref().child('users').child(userId).set({
       email: mail,
       teams: null,
+      adminTeams: null,
       username: username
+  
     })
     alert("Din bruger blev oprettet");
   }

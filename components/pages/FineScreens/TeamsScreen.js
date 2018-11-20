@@ -29,7 +29,7 @@ export default class TeamsFineScreen extends React.Component {
     var that = this;
 
     return firebase.database().ref('users/' + userId + '/teams/').on('value', function (snapshot){
-      teams = snapshot.val()
+      var teams = snapshot.val()
       
         if(teams == undefined || null){
           that.setState({

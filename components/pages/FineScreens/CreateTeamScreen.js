@@ -39,7 +39,6 @@ export default class CreateTeamScreen extends React.Component {
       firebase.database().ref('teams/').push({
           members: members,
           name: teamName,
-          adminID: userId 
       
       //Henter de autogenreret teamID 
       //https://stackoverflow.com/questions/16637035/in-firebase-when-using-push-how-do-i-pull-the-unique-id
@@ -51,6 +50,7 @@ export default class CreateTeamScreen extends React.Component {
         firebase.database().ref('users/' + userId + '/teams').push({
           name: teamName,
           teamID: key,
+          type: 2
           
         }).then((data)=>{
           
@@ -62,6 +62,13 @@ export default class CreateTeamScreen extends React.Component {
             fine: 0,
           
           }).then((data) => {
+
+
+            //Oprette brugeren som Admin
+            firebase.database().ref('users/' + userId + '/adminTeams').push({
+              name: teamName,
+              teamID: key,
+            })
             alert('Dit hold blev oprettet');
 
               
