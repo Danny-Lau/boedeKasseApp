@@ -35,10 +35,7 @@ export default class SpecificTeamFineScreen extends React.Component {
                 isLoading: false,
                 dataSource: members,
               });
-            });
-      
-          
-        
+            }); 
       }
     
       render() {

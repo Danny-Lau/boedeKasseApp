@@ -1,13 +1,12 @@
 import React from 'react';
-import { StyleSheet, ActivityIndicator, FlatList, View, Text, Button} from 'react-native';
+import { StyleSheet, ActivityIndicator, FlatList, View, Text, Button, Image } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import firebase from 'firebase';
 
-
-export default class TeamsFineScreen extends React.Component {
+export default class AdminFineScreen extends React.Component {
 
   static navigationOptions = {
-    title: "Mine hold"
+    title: "Administrere"
   };
 
   constructor(props) {
@@ -17,26 +16,33 @@ export default class TeamsFineScreen extends React.Component {
     }  
   }
 
-  componentDidMount() {
-    this.getMyTeamsFromApiAsync();
+  componentDidMount(){
+    this.getMyOwnTeams();
   }
-
-  getMyTeamsFromApiAsync(){
+   
+  
+  getMyOwnTeams(){
     var userId = firebase.auth().currentUser.uid;
-
     var that = this;
 
-    return firebase.database().ref('users/' + userId + '/teams/').on('value', function (snapshot){
-      var teams = Object.values(snapshot.val());
+    return firebase.database().ref('teams/').on('value',function(snapshot){
+      var myTeams = snapshot.child('adminID').val();
+
+      if (myTeams != userId){
+        return(
+          <View>
+            <Text>Du har ikke oprettet nogle bødekasser endnu!</Text>
+          </View>
+        )
+      }
 
       that.setState({
-        isLoading: false,
-        dataSource: teams,
+        isloading:false,
+        datasource: myTeams
       });
     });
-      
   }
-
+  
   render() {
     if (this.state.isLoading) {
       return (
@@ -60,20 +66,17 @@ export default class TeamsFineScreen extends React.Component {
         }
         keyExtractor={(item, index) => index.toString()}
       />
+
       <Button title='Opret nyt hold' onPress= {() => this.props.navigation.navigate('CreateTeam')}/>
       </View>
     );
-
   }
 }
-
   const styles = StyleSheet.create({
     container: {
       flex: 1,
       backgroundColor: '#fff',
       alignItems: 'center',
       justifyContent: 'center',
-    },
-
-
+    }
   })

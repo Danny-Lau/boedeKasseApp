@@ -42,7 +42,7 @@ export default class SignUpForm extends Component {
     var teams = this.state.team;
     var username = this.state.username;
 
-    firebase.database().ref().child('users').child(userId).set({
+    firebase.database().ref().child('users').child(userId).push({
       email: mail,
       teams: teams,
       username: username

@@ -29,7 +29,7 @@ export default class CreateTeamScreen extends React.Component {
           adminID: userId 
       }).then((data) => {
           alert('Dit hold blev oprettet');
-          this.props.navigation.navigate('TeamScreen')
+          this.props.navigation.navigate('AdminFine')
       }).catch((error) => {
           console.log('error ' , error )
       })
