@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, StyleSheet, ActivityIndicator, FlatList } from 'react-native';
+import {View, Text, StyleSheet, ActivityIndicator, FlatList, Button } from 'react-native';
 import firebase from 'firebase';
 import { ListItem } from 'react-native-elements';
 
@@ -13,6 +13,7 @@ export default class SpecificTeamFineScreen extends React.Component {
         super(props);
         this.state = {
           isloading: true,
+          isAdmin: false
     
         }  
       }
@@ -23,11 +24,24 @@ export default class SpecificTeamFineScreen extends React.Component {
     
 
       ShowSpecificTeam(){
-          const {navigation}  = this.props;
-          const teamID = navigation.getParam('teamID');
-       
-   
+          var {navigation}  = this.props;
+          var teamID = navigation.getParam('teamID');
+          var userId = firebase.auth().currentUser.uid;
           var that = this;
+
+          return firebase.database().ref('teams/' + teamID + '/adminID/').on('value', function (snapshot){
+            var adminID = snapshot.val();
+            
+            if(adminID === userId){
+            that.setState({
+              isAdmin: true,
+            });   
+          } else {
+            that.setState({
+              isAdmin: false,
+            });
+          }
+
           return firebase.database().ref('teams/' + teamID + '/members/').on('value', function (snapshot){
             var members = Object.values(snapshot.val());
 
@@ -36,6 +50,8 @@ export default class SpecificTeamFineScreen extends React.Component {
                 dataSource: members,
               });
             }); 
+          })
+      
       }
     
       render() {
@@ -46,6 +62,31 @@ export default class SpecificTeamFineScreen extends React.Component {
             </View>     
           )
         }
+        switch (this.state.isAdmin){
+          case false: {
+            return (
+              <View>
+              {this.showData()}
+              </View>
+            );
+          }
+
+          case true: {
+            return (
+              <View>
+                {this.showData()}
+                <Button title='Tildel bøde' onPress= {() => this.props.navigation.navigate('CreateTeam')}/>
+                <Button title='Tilføj medlemmer' onPress= {() => this.props.navigation.navigate('CreateTeam')}/>
+              </View>
+            )
+          }
+        }
+      }
+      
+      showData(){
+        if(this.state.loading) {
+          return <ActivityIndicator size='small' />
+        }  
         return (
           <View>
           <FlatList
@@ -64,10 +105,10 @@ export default class SpecificTeamFineScreen extends React.Component {
             keyExtractor={(item, index) => index.toString()}
           />
           </View>
-        );
+          );
+        }
       }
-    }
-
+    
     const styles = StyleSheet.create({
         container: {
           flex: 1,

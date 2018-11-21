@@ -39,6 +39,7 @@ export default class CreateTeamScreen extends React.Component {
       firebase.database().ref('teams/').push({
           members: members,
           name: teamName,
+          adminID: userID
       
       //Henter de autogenreret teamID 
       //https://stackoverflow.com/questions/16637035/in-firebase-when-using-push-how-do-i-pull-the-unique-id

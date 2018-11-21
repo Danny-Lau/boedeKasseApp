@@ -17,6 +17,7 @@ const Profile = createStackNavigator({
 const Fine = createStackNavigator({
   AdminFine: { screen: AdminFineScreen },
   CreateTeam: { screen: CreateTeamScreen},
+  SpecificTeam: { screen: SpecificTeamsFineScreen }
 });
 
 const TeamsFine = createStackNavigator({

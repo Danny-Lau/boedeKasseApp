@@ -84,6 +84,7 @@ export default class AdminFineScreen extends React.Component {
           <View>
           <Text>Du har ikke oprette nogle bøderkasser endnu. </Text>
           <Text>Du kan derfor ikke administrere nogle bødekasser </Text>
+          <Button title='Opret nyt hold' onPress= {() => this.props.navigation.navigate('CreateTeam')}/>
         </View>
         )
       }
