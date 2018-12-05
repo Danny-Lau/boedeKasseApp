@@ -20,6 +20,7 @@ export default class SpecificTeamFineScreen extends React.Component {
 
       componentDidMount() {
         this.ShowSpecificTeam();
+       
       }
     
 
@@ -53,6 +54,7 @@ export default class SpecificTeamFineScreen extends React.Component {
           })
       
       }
+
     
       render() {
         if (this.state.isLoading) {
@@ -75,8 +77,7 @@ export default class SpecificTeamFineScreen extends React.Component {
             return (
               <View>
                 {this.showData()}
-                <Button title='Tildel bøde' onPress= {() => this.props.navigation.navigate('CreateTeam')}/>
-                <Button title='Tilføj medlemmer' onPress= {() => this.props.navigation.navigate('CreateTeam')}/>
+                <Button title='Tilføj medlemmer' onPress= {() => this.props.navigation.navigate('JoinTeam')}/>
               </View>
             )
           }

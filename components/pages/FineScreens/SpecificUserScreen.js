@@ -7,7 +7,13 @@ export default class SpecifikUserScreen extends React.Component {
     title: "Bøder for brugeren"
   };
   render() {
+    const {navigation} = this.props;
+    const username = navigation.getParam('name', 'No username');
+    const teamID = navigation.getParam('fine');
     
+
+    alert(teamID + username)
+
     return (
         <View>
          

@@ -6,6 +6,8 @@ import AdminFineScreen from './AdminFineScreen';
 import SpecificTeamsFineScreen from './FineScreens/SpecificTeamFineScreen';
 import SpecificUserScreen from './FineScreens/SpecificUserScreen';
 import CreateTeamScreen from './FineScreens/CreateTeamScreen';
+import JoinTeamScreen from './FineScreens/JoinTeamScreen';
+import ConfirmJoinTeam from './FineScreens/ConfirmJoinTeam';
 
 import { Ionicons } from '@expo/vector-icons';
 
@@ -17,7 +19,11 @@ const Profile = createStackNavigator({
 const Fine = createStackNavigator({
   AdminFine: { screen: AdminFineScreen },
   CreateTeam: { screen: CreateTeamScreen},
-  SpecificTeam: { screen: SpecificTeamsFineScreen }
+  SpecificTeam: { screen: SpecificTeamsFineScreen},
+  JoinTeam: { screen: JoinTeamScreen},
+  SpecificUser: { screen: SpecificUserScreen},
+  Confirm: { screen: ConfirmJoinTeam},
+  TeamScreen: { screen: TeamsScreen },
 });
 
 const TeamsFine = createStackNavigator({

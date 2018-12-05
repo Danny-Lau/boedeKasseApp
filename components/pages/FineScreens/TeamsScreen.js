@@ -85,9 +85,7 @@ export default class TeamsFineScreen extends React.Component {
       )
       }
 
-    }
-      
-     
+    }  
   }
 }
 
