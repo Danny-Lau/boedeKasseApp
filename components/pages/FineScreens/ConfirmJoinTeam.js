@@ -41,11 +41,11 @@ onButtonPress(){
           const username = snapshot.val()
      
           //Tilføjer brugeren til teamet i Firebase
-          firebase.database().ref().child('teams/' + teamID + '/members').child(userID).set({
+          firebase.database().ref().child('teams/' + teamID + '/members').child(userId).set({
               totalFine: 0,
               name: username,
               email: mail,
-              userID: userID, 
+              userID: userId, 
               teamdID: teamID
             }).then((data)=>{
                  

@@ -47,7 +47,7 @@ export default class SpecifikUserScreen extends React.Component {
         }
       }) 
     
-    }
+      }
 
     CheckExistingFines() {
       const {navigation} = this.props;
@@ -56,10 +56,9 @@ export default class SpecifikUserScreen extends React.Component {
       var that = this;
       
         //Tjekker om brugeren har fået tildelt bøder indtil videre
-        return firebase.database().ref ('teams/' + teamID + '/' + specificUserID + '/fines/').on('value', function(snapshot){
+        return firebase.database().ref ('teams/' + teamID + '/members/' + specificUserID + '/fines').on('value', function(snapshot){
           var fines = snapshot.val();
    
-
           if(fines == undefined || null) {
             that.setState({
               existingFines: false,
@@ -69,84 +68,90 @@ export default class SpecifikUserScreen extends React.Component {
             that.setState({
               isLoading: false,
               existingFines: true,
-              datasource: fines,
+              dataSource: fines,
             });
           }
         });
       }
    
   
-  render() {
-    const {navigation} = this.props;
-      const username = navigation.getParam('name', 'No username');
-      const fine = navigation.getParam('totalFine', 'no fine');
-      const teamID = navigation.getParam('teamID', 'no teamID');
-      const specificUserID  = navigation.getParam('userID', 'no Id');
-
-    if (this.state.isLoading) {
-      return (
-        <View style={{ flex: 1, padding: 20, justifyContent: 'center', alignItems: 'stretch' }}>
-          <ActivityIndicator size='large' />
-        </View>     
-      )
-    }
-
-    switch (this.state.isAdmin){
-      case false: {
-        switch(this.state.existingFines){
-          case false: {
-            return(
-              <View>
-              {this.showMessage()}
-              </View>
-            )
-            } case true: {
-              <View>
-              {this.showFines()}
-              </View>
-            }
+      render() {
+        const {navigation} = this.props;
+          const username = navigation.getParam('name', 'No username');
+          const fine = navigation.getParam('totalFine', 'no fine');
+          const teamID = navigation.getParam('teamID', 'no teamID');
+          const specificUserID  = navigation.getParam('userID', 'no Id');
+    
+        if (this.state.isLoading) {
+          return (
+            <View style={{ flex: 1, padding: 20, justifyContent: 'center', alignItems: 'stretch' }}>
+              <ActivityIndicator size='large' />
+            </View>     
+          )
         }
-      } case true: {
-        switch(this.state.existingFines){
+    
+        switch (this.state.isAdmin){
           case false: {
-            return(
-              <View>
-              {this.showMessage()}
-              <Button 
-                title='Tildel bøde' 
-                onPress={() => {
-                this.props.navigation.navigate('GiveFine', {
-                teamID: teamID,
-                username: username,
-                totalFine: fine,
-                specificUserID: specificUserID
-              });
-              }}
-              />
-               
-              </View>
-            )
-            } case true: {
-              <View>
-              {this.showFines()}
-              <Button 
-                title='Tildel bøde' 
-                onPress={() => {
-                this.props.navigation.navigate('GiveFine', {
-                teamID: teamID,
-                name: username,
-                fine: fine,
-                specificUserID: specificUserID
-              });
-              }}
-              />
-              </View>
+            switch(this.state.existingFines){
+              case false: {
+                return(
+                  <View>
+                  {this.showMessage()}
+                  </View>
+                )
+                } case true: {
+                  return(
+                  <View>
+                  {this.showFines()}
+                  </View>
+                  )}
             }
+          } case true: {
+            switch(this.state.existingFines){
+              case false: {
+                return(
+                  <View>
+                  {this.showMessage()}
+                  <Button 
+                    title='Tildel bøde' 
+                    onPress={() => {
+                    this.props.navigation.navigate('GiveFine', {
+                    teamID: teamID,
+                    username: username,
+                    totalFine: fine,
+                    specificUserID: specificUserID
+                  });
+                  }}
+                  />
+                   
+                  </View>
+                )
+                } case true: {
+                  return (
+           
+                  <View>
+                  {this.showFines()}
+                  <Button 
+                    title='Tildel bøde' 
+                    onPress={() => {
+                    this.props.navigation.navigate('GiveFine', {
+                    teamID: teamID,
+                    name: username,
+                    fine: fine,
+                    specificUserID: specificUserID
+                    
+                  });
+                  }}
+                  />
+                  </View>
+                  )
+                }
+            }
+          }
         }
+      
       }
-    }
-  
-  }
+    
   showMessage(){
     const {navigation} = this.props;
     const username = navigation.getParam('name', 'No username');
@@ -164,7 +169,7 @@ export default class SpecifikUserScreen extends React.Component {
     showFines(){
       const {navigation} = this.props;
       const username = navigation.getParam('name', 'No username');
-      const fine = navigation.getParam('fine', 'no fine');
+      const fine = navigation.getParam('totalFine', 'no fine');
 
 
       if(this.state.loading) {
@@ -177,7 +182,7 @@ export default class SpecifikUserScreen extends React.Component {
             data={this.state.dataSource}
             renderItem={({ item }) =>
               <ListItem
-                title={item.typeOfFine}
+                title={item.typeOfFines}
                 titleStyle={{ color: 'black', fontWeight: 'bold' }}
                 subtitleStyle={{ color: 'tomato' }}
                 subtitle={item.fine}    
