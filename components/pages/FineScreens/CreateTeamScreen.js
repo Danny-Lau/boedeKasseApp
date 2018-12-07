@@ -30,10 +30,11 @@ export default class CreateTeamScreen extends React.Component {
 
       //Henter brugerens username
       return firebase.database().ref('users/' + userId + '/username').on('value', function (snapshot){
-        var username  = snapshot.val();
+        const username  = snapshot.val();
 
-
-
+      //Henter brugeren mail
+      return firebase.database().ref('users/' + userId + '/email').on('value', function (snapshot){
+        const mail  = snapshot.val();
 
       //Opretter ny bødekasse i databasen
       firebase.database().ref('teams/').push({
@@ -63,9 +64,12 @@ export default class CreateTeamScreen extends React.Component {
           
 
           //Tilføjer brugeren til bødekassen
-          firebase.database().ref('teams/' + key + '/members').push({
+          firebase.database().ref().child('teams/' + key + '/members').child(userId).set({
             name: username,
-            fine: 0,
+            totalFine: 0,
+            userID: userId,
+            email: mail,
+            teamID: key
           
           }).then((data) => {
 
@@ -91,6 +95,7 @@ export default class CreateTeamScreen extends React.Component {
         console.log('error ' , error )
     })    
   })
+})
 }
 
 

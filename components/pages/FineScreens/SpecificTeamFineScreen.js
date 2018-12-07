@@ -17,31 +17,15 @@ export default class SpecificTeamFineScreen extends React.Component {
     
         }  
       }
-
       componentDidMount() {
         this.ShowSpecificTeam();
-       
       }
     
 
       ShowSpecificTeam(){
           var {navigation}  = this.props;
           var teamID = navigation.getParam('teamID');
-          var userId = firebase.auth().currentUser.uid;
           var that = this;
-
-          return firebase.database().ref('teams/' + teamID + '/adminID/').on('value', function (snapshot){
-            var adminID = snapshot.val();
-            
-            if(adminID === userId){
-            that.setState({
-              isAdmin: true,
-            });   
-          } else {
-            that.setState({
-              isAdmin: false,
-            });
-          }
 
           return firebase.database().ref('teams/' + teamID + '/members/').on('value', function (snapshot){
             var members = Object.values(snapshot.val());
@@ -51,8 +35,7 @@ export default class SpecificTeamFineScreen extends React.Component {
                 dataSource: members,
               });
             }); 
-          })
-      
+
       }
 
     
@@ -64,42 +47,41 @@ export default class SpecificTeamFineScreen extends React.Component {
             </View>     
           )
         }
-        switch (this.state.isAdmin){
-          case false: {
+        
             return (
               <View>
               {this.showData()}
               </View>
             );
-          }
-
-          case true: {
-            return (
-              <View>
-                {this.showData()}
-                <Button title='Tilføj medlemmer' onPress= {() => this.props.navigation.navigate('JoinTeam')}/>
-              </View>
-            )
-          }
         }
-      }
+
+        
       
+    
       showData(){
+        var {navigation}  = this.props;
+        var teamID = navigation.getParam('teamID');
+        var name = navigation.getParam('name');
+        var fine = navigation.getParam('totalFine');
+
+
         if(this.state.loading) {
           return <ActivityIndicator size='small' />
         }  
         return (
           <View>
           <FlatList
-            data={this.state.dataSource}
+            data={this.state.dataSource} 
             renderItem={({ item }) =>
               <ListItem
-                title={item.name}
+                title={item.name +'  ' + '(' + item.email + ')' } 
                 titleStyle={{ color: 'black', fontWeight: 'bold' }}
                 subtitleStyle={{ color: 'tomato' }}
-                subtitle={item.fine}    
+                subtitle={item.totalFine}    
                 chevronColor='tomato'
-                onPress={() => this.props.navigation.navigate('SpecificUser', item)}
+                onPress={() => this.props.navigation.navigate('SpecificUser', item 
+                )}
+             
                 containerStyle={{ backgroundColor: 'white' }}
               />
             }

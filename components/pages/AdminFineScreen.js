@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleSheet, ActivityIndicator, FlatList, View, Text, Button, Image } from 'react-native';
+import { StyleSheet, ActivityIndicator, FlatList, View, Text, Button  } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import firebase from 'firebase';
+
 
 export default class AdminFineScreen extends React.Component {
 
@@ -74,8 +75,10 @@ export default class AdminFineScreen extends React.Component {
             keyExtractor={(item, index) => index.toString()}
           />
     
-          <Button title='Opret nyt hold' onPress= {() => this.props.navigation.navigate('CreateTeam')}/>
-          <Button title='Join bødekasse' onPress= {() => this.props.navigation.navigate('JoinTeam')}/>
+
+            <Button title='Opret nyt hold' onPress= {() => this.props.navigation.navigate('CreateTeam')}/>      
+            <Button title='Join bødekasse' onPress= {() => this.props.navigation.navigate('JoinTeam')}/>
+
           </View>
         );
       }

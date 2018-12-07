@@ -8,6 +8,7 @@ import SpecificUserScreen from './FineScreens/SpecificUserScreen';
 import CreateTeamScreen from './FineScreens/CreateTeamScreen';
 import JoinTeamScreen from './FineScreens/JoinTeamScreen';
 import ConfirmJoinTeam from './FineScreens/ConfirmJoinTeam';
+import GiveFineScreen from './FineScreens/GiveFineScreen';
 
 import { Ionicons } from '@expo/vector-icons';
 
@@ -23,7 +24,8 @@ const Fine = createStackNavigator({
   JoinTeam: { screen: JoinTeamScreen},
   SpecificUser: { screen: SpecificUserScreen},
   Confirm: { screen: ConfirmJoinTeam},
-  TeamScreen: { screen: TeamsScreen },
+  GiveFine: { screen: GiveFineScreen}
+
 });
 
 const TeamsFine = createStackNavigator({

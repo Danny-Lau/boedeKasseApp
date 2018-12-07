@@ -26,19 +26,27 @@ onButtonPress(){
   const teamName = navigation.getParam('name', 'No name');
   const teamID = navigation.getParam('teamID', 'No team ID');
   const userId = firebase.auth().currentUser.uid;
+
+  //Henter Brugerens mail
+  return firebase.database().ref('users/' + userId + '/email').once('value', function (snapshot){
+    const mail = snapshot.val();
+  
     
   return firebase.database().ref('users/' + userId + '/teams/' + teamID).once('value', function(snapshot){
-      var  checkingObject = snapshot.val();
+      const  checkingObject = snapshot.val();
 
        if (checkingObject == undefined || null){
         //Henter brugernavnet ned
         return firebase.database().ref('users/' + userId + '/username').on('value', function (snapshot){
-          var username = snapshot.val()
+          const username = snapshot.val()
      
           //Tilføjer brugeren til teamet i Firebase
-          firebase.database().ref('teams/' + teamID + '/members').push({
-              fine: 0,
+          firebase.database().ref().child('teams/' + teamID + '/members').child(userID).set({
+              totalFine: 0,
               name: username,
+              email: mail,
+              userID: userID, 
+              teamdID: teamID
             }).then((data)=>{
                  
                 //Tilføjer teamet til brugeren i Firebase
@@ -54,6 +62,7 @@ onButtonPress(){
         alert('Du er allerede tilmeldt denne bødekassen')
       }
   })
+})
 }
 
   render() {

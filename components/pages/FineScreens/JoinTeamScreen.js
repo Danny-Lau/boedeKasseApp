@@ -60,7 +60,7 @@ render(){
                   title={item.name}
                   titleStyle={{ color: 'black', fontWeight: 'bold' }}
                   chevronColor='tomato'
-                  onPress={() => this.props.navigation.navigate('Confirm', item)}
+                  onPress={() => this.props.navigation.navigate('Confirm', item, )}
                   containerStyle={{ backgroundColor: 'white' }}
                 />
               }
