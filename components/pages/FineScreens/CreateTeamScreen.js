@@ -29,11 +29,11 @@ export default class CreateTeamScreen extends React.Component {
       const members = this.state.members;
 
       //Henter brugerens username
-      return firebase.database().ref('users/' + userId + '/username').on('value', function (snapshot){
+      return firebase.database().ref('users/' + userId + '/username').once('value', function (snapshot){
         const username  = snapshot.val();
 
       //Henter brugeren mail
-      return firebase.database().ref('users/' + userId + '/email').on('value', function (snapshot){
+      return firebase.database().ref('users/' + userId + '/email').once('value', function (snapshot){
         const mail  = snapshot.val();
 
       //Opretter ny bødekasse i databasen
