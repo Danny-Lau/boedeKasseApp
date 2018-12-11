@@ -6,7 +6,15 @@ import firebase from 'firebase';
 export default class AddMembersScreen extends React.Component {
 
     static navigationOptions = {
-        title: "Vælg hold"
+        title: "Vælg hold",
+
+        headerStyle: {
+            backgroundColor: '#2c3e50'
+           },
+      
+           headerTitleStyle: {
+            color: 'rgba(225,225,225,0.7)'
+         },
     };
 
     constructor(props) {
@@ -59,7 +67,7 @@ render(){
                 <ListItem
                   title={item.name}
                   titleStyle={{ color: 'black', fontWeight: 'bold' }}
-                  chevronColor='tomato'
+                  chevronColor='#2c3e50'
                   onPress={() => this.props.navigation.navigate('Confirm', item, )}
                   containerStyle={{ backgroundColor: 'white' }}
                 />

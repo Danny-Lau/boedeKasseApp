@@ -1,12 +1,20 @@
 import React from 'react';
-import { StyleSheet, View, Text, Button, } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Text, Button, } from 'react-native';
 import firebase from 'firebase';
 
 
 export default class ConfirmJoinTeam extends React.Component {
 
   static navigationOptions = {
-    title: "Bekræftelse"
+    title: "Bekræftelse",
+
+    headerStyle: {
+      backgroundColor: '#2c3e50'
+     },
+
+     headerTitleStyle: {
+      color: 'rgba(225,225,225,0.7)'
+   },
   };
 
   constructor(props) {
@@ -37,7 +45,7 @@ onButtonPress(){
 
        if (checkingObject == undefined || null){
         //Henter brugernavnet ned
-        return firebase.database().ref('users/' + userId + '/username').on('value', function (snapshot){
+        return firebase.database().ref('users/' + userId + '/username').once('value', function (snapshot){
           const username = snapshot.val()
      
           //Tilføjer brugeren til teamet i Firebase
@@ -46,7 +54,7 @@ onButtonPress(){
               name: username,
               email: mail,
               userID: userId, 
-              teamdID: teamID
+              teamID: teamID
             }).then((data)=>{
                  
                 //Tilføjer teamet til brugeren i Firebase
@@ -55,7 +63,7 @@ onButtonPress(){
                     teamID: teamID
                 })
     
-                alert('Du er nu tilmeldt bødekassen' + teamName)
+                alert('Du er nu tilmeldt bødekassen ' + teamName)
             })  
         });  
       } else {
@@ -72,18 +80,38 @@ onButtonPress(){
     
         return (
             <View>
-              <Text>Er du sikker på, at du vil tilmelde dig bødekassen {name}?</Text>
+              <Text style={styles.text}>Er du sikker på, at du vil tilmelde dig bødekassen "{name}"?</Text>
               
-              {this.renderButton()}
+              <TouchableOpacity
+              style={styles.buttons}>
+              <Button 
+                onPress={this.executefunction.bind(this)}           
+                title="Tilmeld"
+                color='white'
+              /> 
+             </TouchableOpacity> 
             </View>
         );
 
   }
-
-renderButton() {
-    return (
-      <Button title="Tilmeld" onPress={this.executefunction.bind(this)}>
-      </Button>
-    );
-  }
 }
+
+const styles = StyleSheet.create({
+
+  buttons: {
+    borderColor: 'lightgrey',
+    height: '20%',
+    width: '80%',
+    backgroundColor: '#2980b6',
+    marginBottom: '3%',
+    marginLeft: '10%',
+ },
+
+  text: {
+    fontSize: 16,
+    width: '90%',
+    marginLeft: '5%',
+    marginBottom:'5%',
+    marginTop: '5%'
+ }
+})

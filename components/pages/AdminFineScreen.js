@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, ActivityIndicator, FlatList, View, Text, Button  } from 'react-native';
+import { StyleSheet, ActivityIndicator, FlatList, TouchableOpacity, View, Text, Button  } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import firebase from 'firebase';
 
@@ -7,7 +7,15 @@ import firebase from 'firebase';
 export default class AdminFineScreen extends React.Component {
 
   static navigationOptions = {
-    title: "Administrere"
+    title: "Administrere",
+
+    headerStyle: {
+      backgroundColor: '#2c3e50'
+     },
+
+     headerTitleStyle: {
+      color: 'rgba(225,225,225,0.7)'
+   },
   };
 
   constructor(props) {
@@ -60,14 +68,14 @@ export default class AdminFineScreen extends React.Component {
     switch(this.state.isAdmin){
       case true: {
         return (
-          <View>
+          <View style={styles.container}>
           <FlatList
             data={this.state.dataSource}
             renderItem={({ item }) =>
               <ListItem
                 title={item.name}
                 titleStyle={{ color: 'black', fontWeight: 'bold' }}
-                chevronColor='tomato'
+                chevronColor='#2c3e50'
                 onPress={() => this.props.navigation.navigate('SpecificTeam', item)}
                 containerStyle={{ backgroundColor: 'white' }}
               />
@@ -76,8 +84,23 @@ export default class AdminFineScreen extends React.Component {
           />
     
 
-            <Button title='Opret nyt hold' onPress= {() => this.props.navigation.navigate('CreateTeam')}/>      
-            <Button title='Join bødekasse' onPress= {() => this.props.navigation.navigate('JoinTeam')}/>
+              <TouchableOpacity
+              style={styles.buttons}>
+              <Button 
+                onPress={() => this.props.navigation.navigate('CreateTeam')}            
+                title="Opret ny bødekasse"
+                color='white'
+              /> 
+              </TouchableOpacity> 
+
+              <TouchableOpacity
+                style={styles.buttons}>
+                <Button 
+                  onPress= {() => this.props.navigation.navigate('JoinTeam')}         
+                  title="Join bødekasse"
+                  color='white'
+                /> 
+              </TouchableOpacity>
 
           </View>
         );
@@ -86,10 +109,26 @@ export default class AdminFineScreen extends React.Component {
       case false: {
         return (
           <View>
-          <Text>Du har ikke oprette nogle bøderkasser endnu. </Text>
-          <Text>Du kan derfor ikke administrere nogle bødekasser </Text>
-          <Button title='Opret nyt hold' onPress= {() => this.props.navigation.navigate('CreateTeam')}/>
-          <Button title='Join bødekasse' onPress= {() => this.props.navigation.navigate('JoinTeam')}/>
+          <Text style={styles.text}>Du har ikke oprette nogle bøderkasser endnu. 
+          Du kan derfor ikke administrere nogle bødekasser  </Text>
+         
+            <TouchableOpacity
+              style={styles.buttons}>
+              <Button 
+                onPress={() => this.props.navigation.navigate('CreateTeam')}            
+                title="Opret ny bødekasse"
+                color='white'
+              /> 
+          </TouchableOpacity> 
+
+          <TouchableOpacity
+              style={styles.buttons}>
+              <Button 
+                onPress= {() => this.props.navigation.navigate('JoinTeam')}         
+                title="Join bødekasse"
+                color='white'
+              /> 
+          </TouchableOpacity>
         </View>
         )
       }
@@ -97,12 +136,24 @@ export default class AdminFineScreen extends React.Component {
     
       
     }  
+
 }
   const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    }
+
+    buttons: {
+      height: 45,
+      width: 300,
+      backgroundColor: '#2980b6',
+      marginBottom: '3%',
+      marginLeft: '10%',
+      marginTop: '5%'
+   },
+
+    text: {
+      fontSize: 16,
+      width: '90%',
+      marginLeft: '5%',
+      marginBottom:'5%',
+      marginTop: '5%'
+   }
   })

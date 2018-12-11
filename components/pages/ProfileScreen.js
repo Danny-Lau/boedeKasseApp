@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, ActivityIndicator, TextInput, View, Text, Button} from 'react-native';
+import { StyleSheet, TouchableOpacity,View, Button} from 'react-native';
 import { ListItem, ListView} from 'react-native-elements';
 import firebase from 'firebase';
 
@@ -8,7 +8,16 @@ export default class ProfileScreen extends React.Component {
   
 
   static navigationOptions = {
-    title: "Min Profil"
+    title: "Min Profil",
+
+    headerStyle: {
+      backgroundColor: '#2c3e50'
+     },
+
+     headerTitleStyle: {
+      color: 'rgba(225,225,225,0.7)'
+   },
+    
   };
   
 
@@ -18,8 +27,17 @@ export default class ProfileScreen extends React.Component {
 
     return(
       <View style={styles.container}>
-    <Button title="Log ud" onPress={() => firebase.auth().signOut()}></Button>
+        <TouchableOpacity
+              style={styles.buttons}>
+              <Button 
+                onPress={() => firebase.auth().signOut()}        
+                title="Log ud"
+                color='white'
+              /> 
+          </TouchableOpacity>
    </View>
+
+
  );
 }
 }
@@ -30,5 +48,14 @@ container: {
  backgroundColor: '#fff',
  alignItems: 'center',
  justifyContent: 'center',
+},
+
+buttons: {
+  borderColor: 'lightgrey',
+  height: '7%',
+  width: '60%',
+  backgroundColor: '#2980b6',
+  marginBottom: '3%',
+
 }
 })

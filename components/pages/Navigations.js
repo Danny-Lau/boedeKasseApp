@@ -46,6 +46,7 @@ export default createBottomTabNavigator(
 
   {
     navigationOptions: ({ navigation }) => ({
+  
 
       tabBarIcon: ({ focused, tintColor }) => {
 
@@ -64,7 +65,7 @@ export default createBottomTabNavigator(
     }),
     tabBarOptions: {
       activeTintColor: 'tomato',
-      inactiveTintColor: 'gray',
+      inactiveTintColor: 'black',
     },
   }
 );

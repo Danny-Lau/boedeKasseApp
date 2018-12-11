@@ -1,12 +1,20 @@
 import React from 'react';
-import {View, Text, StyleSheet, TextInput, Button } from 'react-native';
+import {View, Text, StyleSheet, TextInput, TouchableOpacity, Button } from 'react-native';
 import firebase from 'firebase';
 
 
 export default class CreateTeamScreen extends React.Component {
 
   static navigationOptions = {
-    title: "Opret nyt hold"
+    title: "Opret bødekasse",
+
+    headerStyle: {
+      backgroundColor: '#2c3e50'
+     },
+
+     headerTitleStyle: {
+      color: 'rgba(225,225,225,0.7)'
+   },
   };
 
   constructor(props) {
@@ -102,14 +110,23 @@ export default class CreateTeamScreen extends React.Component {
   render() {
        return (
         <View style={styles.container}>
-            <Text style={styles.loginContent}>Indtast holdnavn</Text>
+            <Text style={styles.teamContent}>Indtast holdnavn</Text>
                 <TextInput 
                     style={styles.inputBox}
                   placeholder='Holdnavn'
+                  placeholderTextColor='lightgrey'
                   value={this.state.teamName}
                   onChangeText={teamName => this.setState({ teamName })}
                 />
-                <Button title='Opret mit hold' onPress={this.executefunction.bind(this) }></Button>
+       
+                <TouchableOpacity
+                    style={styles.buttons}>
+                    <Button 
+                    onPress={this.executefunction.bind(this) }
+                    title="Opret bødekasse"
+                    color='white'
+                    /> 
+                </TouchableOpacity>
         
         </View>
     );
@@ -124,20 +141,29 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
     },
 
-    loginContent: {
+    teamContent: {
       fontSize: 20,
+      fontWeight: 'bold',
     },
 
     inputBox: {
-        borderWidth: 2,
-        borderColor: 'lightgrey',
-        height: 30,
-        width: 150,
-        marginBottom: 20,
-        marginTop: 15,
+      borderWidth: 2,
+      borderColor: '#4d4d4d',
+      height: '5%',
+      width: '60%',
+      marginBottom: '3%',
+      marginTop: '5%',
+      textAlign: 'center'
 
+    },
+    buttons: {
+      borderColor: 'lightgrey',
+      height: '7%',
+      width: '60%',
+      backgroundColor: '#2980b6',
+      marginTop: '3%',
 
-    }
+   },
 
 
   });

@@ -7,7 +7,15 @@ import firebase from 'firebase';
 export default class TeamsFineScreen extends React.Component {
 
   static navigationOptions = {
-    title: "Mine hold"
+    title: "Mine hold",
+
+    headerStyle: {
+      backgroundColor: '#2c3e50'
+     },
+
+     headerTitleStyle: {
+      color: 'rgba(225,225,225,0.7)'
+   },
   };
 
   constructor(props) {
@@ -66,7 +74,7 @@ export default class TeamsFineScreen extends React.Component {
             <ListItem
               title={item.name}
               titleStyle={{ color: 'black', fontWeight: 'bold' }}
-              chevronColor='tomato'
+              chevronColor='#2c3e50'
               onPress={() => this.props.navigation.navigate('SpecificTeam', item)}
               containerStyle={{ backgroundColor: 'white' }}
             />
@@ -80,7 +88,7 @@ export default class TeamsFineScreen extends React.Component {
       case false:{
       return(
         <View>
-          <Text>Du er desværre ikke tilmeldt nogle bødekasser endnu</Text>
+          <Text style={styles.text}>Du er desværre ikke tilmeldt nogle bødekasser endnu</Text>
         </View>
       )
       }
@@ -99,5 +107,11 @@ export default class TeamsFineScreen extends React.Component {
       justifyContent: 'center',
     },
 
-
+    text: {
+      fontSize: 16,
+      width: '90%',
+      marginLeft: '5%',
+      marginBottom:'5%',
+      marginTop: '5%'
+   }
   })

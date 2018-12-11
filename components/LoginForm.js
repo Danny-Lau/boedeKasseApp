@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, TextInput, StyleSheet, View, ActivityIndicator, Button } from 'react-native';
+import { Text, TextInput, StyleSheet, View, TouchableOpacity, ActivityIndicator, Button } from 'react-native';
 import firebase from 'firebase';
 import SignUpForm from './SignUpForm';
 export default class LoginForm extends Component {
@@ -49,25 +49,36 @@ export default class LoginForm extends Component {
           case true:
           return (
             <View style={styles.container}>
-                <Text style={styles.LoginContent}>Login</Text>
+                <Text style={styles.LoginText}>Login</Text>
                 <TextInput
-                label='Email'
-                  placeholder='user@mail.com'
+                  style={styles.inputBox}
+                  placeholder='User@mail.com'
+                  placeholderTextColor='rgba(225,225,225,0.7)'
                   value={this.state.email}
                   onChangeText={email => this.setState({ email })}
                 />
                 <TextInput
-                  placeholder='password'
+                  style={styles.inputBox}
+                  placeholder='Password'
+                  placeholderTextColor='rgba(225,225,225,0.7)'
                   value={this.state.password}
                   secureTextEntry={true}
                   onChangeText={password => this.setState({ password })}
+                  
                 />
               <Text style={styles.errorTextStyle}>
                 {this.state.error}
               </Text>
       
                 {this.renderButton()}
-                <Button title='Sign up' onPress={() => this.setState({hasLogin : false})}></Button>
+                <TouchableOpacity
+                    style={styles.buttons}>
+                    <Button 
+                    onPress={() => this.setState({hasLogin : false})}            
+                    title="Sign up"
+                    color='rgb(204, 204, 204)'
+                    /> 
+                </TouchableOpacity> 
             
                 
             </View>
@@ -75,10 +86,18 @@ export default class LoginForm extends Component {
 
           case false: {
             return (
-              <View>
+              <View style={styles.container}>
                 <SignUpForm/>
-                <Button title='Tilbage' onPress={() => this.setState({hasLogin : true})}/>
-              </View>
+                  <TouchableOpacity
+                    style={styles.buttons}>
+                      <Button 
+                        onPress={() => this.setState({hasLogin : true})}           
+                        title="Tilbage"
+                        color='rgb(204, 204, 204)'
+                        /> 
+                </TouchableOpacity> 
+                  
+          </View>
             )
           }
       }  
@@ -89,8 +108,15 @@ export default class LoginForm extends Component {
       return <ActivityIndicator size='small' />
     }
     return (
-      <Button title="Login" onPress={this.onButtonPress.bind(this)}>
-      </Button>
+    <TouchableOpacity
+      style={styles.buttons}>
+        <Button 
+          onPress={this.onButtonPress.bind(this)}            
+          title="Login"
+          color='rgb(204, 204, 204)'
+        /> 
+    </TouchableOpacity> 
+      
     );
   }
 }
@@ -98,13 +124,36 @@ export default class LoginForm extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#2c3e50',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  LoginContent: {
+  LoginText: {
     fontSize: 24,
+    color: 'rgb(204, 204, 204)'
 
   },
+
+  inputBox: {
+    borderWidth: 2,
+    borderColor: 'lightgrey',
+    height: '5%',
+    width: '60%',
+    marginBottom: '3%',
+    marginTop: '5%',
+    textAlign: 'center'
+},
+
+  buttons: {
+    borderColor: 'lightgrey',
+    height: '6%',
+    width: '60%',
+    backgroundColor: '#2980b6',
+    marginBottom: '3%',
+
+ }
+
+
+
 });
 

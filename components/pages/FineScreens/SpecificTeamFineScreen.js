@@ -6,7 +6,15 @@ import { ListItem } from 'react-native-elements';
 export default class SpecificTeamFineScreen extends React.Component {
 
     static navigationOptions = {
-        title: 'Bøder for holdet' 
+        title: 'Bøder for holdet', 
+
+        headerStyle: {
+          backgroundColor: '#2c3e50'
+         },
+    
+         headerTitleStyle: {
+          color: 'rgba(225,225,225,0.7)'
+       },
       };
 
       constructor(props) {
@@ -59,10 +67,10 @@ export default class SpecificTeamFineScreen extends React.Component {
       
     
       showData(){
-        var {navigation}  = this.props;
-        var teamID = navigation.getParam('teamID');
-        var name = navigation.getParam('name');
-        var fine = navigation.getParam('totalFine');
+        const {navigation}  = this.props;
+        const teamID = navigation.getParam('teamID');
+        const name = navigation.getParam('name');
+        const totalFine = navigation.getParam('totalFine');
 
 
         if(this.state.loading) {
@@ -77,10 +85,9 @@ export default class SpecificTeamFineScreen extends React.Component {
                 title={item.name +'  ' + '(' + item.email + ')' } 
                 titleStyle={{ color: 'black', fontWeight: 'bold' }}
                 subtitleStyle={{ color: 'tomato' }}
-                subtitle={item.totalFine}    
-                chevronColor='tomato'
-                onPress={() => this.props.navigation.navigate('SpecificUser', item 
-                )}
+                subtitle={item.totalFine + ' kr. '}    
+                chevronColor='#2c3e50'
+                onPress={() => this.props.navigation.navigate('SpecificUser', item )}
              
                 containerStyle={{ backgroundColor: 'white' }}
               />

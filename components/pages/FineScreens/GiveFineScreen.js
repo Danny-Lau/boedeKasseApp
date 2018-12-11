@@ -1,12 +1,21 @@
 import React from 'react';
-import {View, Text, StyleSheet, TextInput, Button } from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity, TextInput, Button } from 'react-native';
 import firebase from 'firebase';
 
 
 export default class GiveFineScreen extends React.Component {
 
   static navigationOptions = {
-    title: "Giv bøde"
+    title: "Giv bøde",
+
+    headerStyle: {
+      backgroundColor: '#2c3e50'
+     },
+
+     headerTitleStyle: {
+      color: 'rgba(225,225,225,0.7)'
+   },
+
   };
 
   constructor(props) {
@@ -31,7 +40,7 @@ export default class GiveFineScreen extends React.Component {
     const teamID = navigation.getParam('teamID', 'no teamID');
     const specificUserID  = navigation.getParam('specificUserID', 'no Id');
     const totalFine = navigation.getParam('totalFine', 'no fine');
-    const username = navigation.getParam('username', 'no fine');
+    const username = navigation.getParam('name', 'no username');
     const typeOfFines = this.state.typeOfFines;
     const fine = this.state.fine;
 
@@ -66,6 +75,7 @@ export default class GiveFineScreen extends React.Component {
                 <TextInput 
                     style={styles.inputBox}
                   placeholder='Årsag'
+                  placeholderTextColor='lightgrey'
                   value={this.state.typeOfFines}
                   onChangeText={typeOfFines => this.setState({ typeOfFines })}
                 />
@@ -75,11 +85,20 @@ export default class GiveFineScreen extends React.Component {
                     style={styles.inputBox} 
                     keyboardType = 'numeric'
                   placeholder='Beløb "f.eks 100"'
+                  placeholderTextColor='lightgrey'
                   value={this.state.fine}
                   onChangeText={fine => this.setState({ fine })}
                 />
 
-                <Button title='Giv bøde' onPress={this.executefunction.bind(this) }></Button>
+    
+                <TouchableOpacity
+                    style={styles.buttons}>
+                    <Button 
+                    onPress={this.executefunction.bind(this)}
+                    title="Giv bøde"
+                    color='white'
+                    /> 
+                </TouchableOpacity>
                
     
         </View>
@@ -97,18 +116,27 @@ const styles = StyleSheet.create({
 
     fineContent: {
       fontSize: 16,
+      fontWeight: 'bold',
     },
 
     inputBox: {
-        borderWidth: 2,
-        borderColor: 'lightgrey',
-        height: 30,
-        width: 150,
-        marginBottom: 20,
-        marginTop: 15,
+      borderWidth: 2,
+      borderColor: '#4d4d4d',
+      height: '5%',
+      width: '60%',
+      marginBottom: '3%',
+      marginTop: '3%',
+      textAlign: 'center'
+    },
 
+    buttons: {
+        height: '7%',
+        width: '60%',
+        backgroundColor: '#2980b6',
+        marginTop: '3%',
+        marginBottom: '3%'
 
-    }
+   },
 
 
   });
