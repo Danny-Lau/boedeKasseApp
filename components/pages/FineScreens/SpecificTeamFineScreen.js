@@ -8,6 +8,7 @@ export default class SpecificTeamFineScreen extends React.Component {
     static navigationOptions = {
         title: 'Bøder for holdet', 
 
+        //Styling af headeren på siden 
         headerStyle: {
           backgroundColor: '#2c3e50'
          },
@@ -25,6 +26,7 @@ export default class SpecificTeamFineScreen extends React.Component {
     
         }  
       }
+      //Kører denne funktionen når siden indlæses
       componentDidMount() {
         this.ShowSpecificTeam();
       }
@@ -34,10 +36,12 @@ export default class SpecificTeamFineScreen extends React.Component {
           var {navigation}  = this.props;
           var teamID = navigation.getParam('teamID');
           var that = this;
-
+          
+          //Databasekald som henter den specifikke bødekasses medlemmer ned
           return firebase.database().ref('teams/' + teamID + '/members/').on('value', function (snapshot){
             var members = Object.values(snapshot.val());
 
+            //Sætter members ind i datasource
             that.setState({
                 isLoading: false,
                 dataSource: members,
@@ -47,6 +51,8 @@ export default class SpecificTeamFineScreen extends React.Component {
       }
 
     
+            
+      // Viser bødekassens medlemmer i en FlatList
       render() {
         if (this.state.isLoading) {
           return (
@@ -55,7 +61,6 @@ export default class SpecificTeamFineScreen extends React.Component {
             </View>     
           )
         }
-        
             return (
               <View>
               {this.showData()}
@@ -64,15 +69,9 @@ export default class SpecificTeamFineScreen extends React.Component {
         }
 
         
-      
-    
+
+      //funktioen som bliver kaldt i render (skal vise medlemmerne i bødekassen)
       showData(){
-        const {navigation}  = this.props;
-        const teamID = navigation.getParam('teamID');
-        const name = navigation.getParam('name');
-        const totalFine = navigation.getParam('totalFine');
-
-
         if(this.state.loading) {
           return <ActivityIndicator size='small' />
         }  

@@ -8,6 +8,7 @@ export default class GiveFineScreen extends React.Component {
   static navigationOptions = {
     title: "Giv bøde",
 
+    //Styling af headeren på siden 
     headerStyle: {
       backgroundColor: '#2c3e50'
      },
@@ -27,6 +28,7 @@ export default class GiveFineScreen extends React.Component {
     }
   }
 
+  //Kører denne funktion når brugeren trykker på knappen "Giv bøde"
   executefunction(){
     this.createFine();
     this.props.navigation.navigate('AdminFine');
@@ -44,7 +46,7 @@ export default class GiveFineScreen extends React.Component {
     const typeOfFines = this.state.typeOfFines;
     const fine = this.state.fine;
 
-    //opretter bøden i firebase
+    //opretter bøden i databsen 
     firebase.database().ref('teams/' + teamID + '/members/' + specificUserID + '/fines').push({
         typeOfFines: typeOfFines,
         fine: fine
@@ -54,6 +56,7 @@ export default class GiveFineScreen extends React.Component {
         //Opdater samlet beløb, der skyldes
         var updateFine = +totalFine + +fine;
 
+        //Databasekald til at opdater den samlet beløb som skyldes
         firebase.database().ref('teams/' + teamID + '/members/' + specificUserID ).update({
             totalFine: updateFine
         })
@@ -70,6 +73,7 @@ export default class GiveFineScreen extends React.Component {
 
   render() {
        return (
+         //Viser en inputbox til at skrive årsagen til bøde og en anden til at angive bødensstørrelse
         <View style={styles.container}>
             <Text style={styles.fineContent}>Årsag til bøden</Text>
                 <TextInput 
@@ -80,6 +84,7 @@ export default class GiveFineScreen extends React.Component {
                   onChangeText={typeOfFines => this.setState({ typeOfFines })}
                 />
 
+                
                 <Text style={styles.fineContent}>Bøde</Text>
                 <TextInput 
                     style={styles.inputBox} 
@@ -99,13 +104,13 @@ export default class GiveFineScreen extends React.Component {
                     color='white'
                     /> 
                 </TouchableOpacity>
-               
-    
         </View>
     );
   }
 }
 
+
+//Styling af siden 
 const styles = StyleSheet.create({
     container: {
       flex: 1,

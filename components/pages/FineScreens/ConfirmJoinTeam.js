@@ -8,6 +8,7 @@ export default class ConfirmJoinTeam extends React.Component {
   static navigationOptions = {
     title: "Bekræftelse",
 
+    // styling af headeren på siden
     headerStyle: {
       backgroundColor: '#2c3e50'
      },
@@ -23,7 +24,7 @@ export default class ConfirmJoinTeam extends React.Component {
     error:'',
 }
   }
-
+//Kører denne funktion når brugeren trykker på knappen "Tilmeld"
 executefunction(){
   this.onButtonPress();
   this.props.navigation.navigate('JoinTeam');
@@ -39,9 +40,10 @@ onButtonPress(){
   return firebase.database().ref('users/' + userId + '/email').once('value', function (snapshot){
     const mail = snapshot.val();
   
-    
+  //Databasekald til at tjekke om brugeren er tilmeldt bødekasseni forevejen 
   return firebase.database().ref('users/' + userId + '/teams/' + teamID).once('value', function(snapshot){
       const  checkingObject = snapshot.val();
+
 
        if (checkingObject == undefined || null){
         //Henter brugernavnet ned
@@ -67,6 +69,7 @@ onButtonPress(){
             })  
         });  
       } else {
+        //Hvis brugeren er tilmeldt bødekassen så visses denn besked
         alert('Du er allerede tilmeldt denne bødekassen')
       }
   })
@@ -77,7 +80,7 @@ onButtonPress(){
     
     const {navigation} = this.props;
     const name = navigation.getParam('name', 'No name');
-    
+        //Spørger om bruger er sikker på at tilmelde sig bødekasen. Dette kan bekræftes ved at brugen trykker "Tilmeld"
         return (
             <View>
               <Text style={styles.text}>Er du sikker på, at du vil tilmelde dig bødekassen "{name}"?</Text>
@@ -96,6 +99,7 @@ onButtonPress(){
   }
 }
 
+//Styling af siden
 const styles = StyleSheet.create({
 
   buttons: {

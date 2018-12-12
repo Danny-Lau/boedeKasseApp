@@ -4,7 +4,6 @@ import firebase from 'firebase';
 import SignUpForm from './SignUpForm';
 export default class LoginForm extends Component {
 
-
   constructor(props) {
     super(props);
     this.state = {
@@ -15,8 +14,11 @@ export default class LoginForm extends Component {
       hasLogin: true 
     }
   }
-
+  
+  //Funktion til når man trykker på login
   onButtonPress() {
+
+    //Tager email og password som brugeren har indtastet
     const { email, password } = this.state;
 
     this.setState({ 
@@ -24,12 +26,14 @@ export default class LoginForm extends Component {
       loading: true 
     });
 
+    // Brguer firebase signIn metode til at tjekke om email og password er korrekte
     firebase.auth().signInWithEmailAndPassword(email, password)
         .then(this.onLoginSuccess.bind(this))
 
         .catch(this.onLoginFailed.bind(this));
   }
 
+  //Tømmer felterne hvis login er rigtige
   onLoginSuccess() {
     this.setState({ 
       email: '', 
@@ -48,6 +52,7 @@ export default class LoginForm extends Component {
       switch(this.state.hasLogin) {
           case true:
           return (
+            //Hvis brugeren skal logge ind, så ises denne skærm
             <View style={styles.container}>
                 <Text style={styles.LoginText}>Login</Text>
                 <TextInput
@@ -85,6 +90,7 @@ export default class LoginForm extends Component {
           );
 
           case false: {
+            //Hvis brugeren skal oprette sig, så vises dene skærm
             return (
               <View style={styles.container}>
                 <SignUpForm/>
@@ -103,6 +109,7 @@ export default class LoginForm extends Component {
       }  
   }
 
+  //Login knappen
   renderButton() {
     if(this.state.loading) {
       return <ActivityIndicator size='small' />
@@ -121,6 +128,7 @@ export default class LoginForm extends Component {
   }
 }
 
+//Styling af siden
 const styles = StyleSheet.create({
   container: {
     flex: 1,

@@ -16,7 +16,9 @@ export default class SignUpForm extends Component {
     }
   }
 
+  ////Funktion til når man trykker på sign up
   onButtonPress() {
+    //Tager email og password som brugeren har indtastet
     const { email, password } = this.state;
 
     this.setState({ 
@@ -24,11 +26,13 @@ export default class SignUpForm extends Component {
       loading: true 
     });
 
+    // Brguer firebase signUp metode til at oprette brugeren email og password i systemet
     firebase.auth().createUserWithEmailAndPassword(email, password)
         .then(this.onSignUpSuccess.bind(this))
         .catch(this.onSignUpFailed.bind(this));
   }
 
+   //Tømmer felterne hvis signUp bliver godkendt 
   onSignUpSuccess() {
     this.setState({ 
       email: '', 
@@ -36,11 +40,15 @@ export default class SignUpForm extends Component {
       loading: false, 
       error: '' 
     });
-    
+  
     const userId = firebase.auth().currentUser.uid;
     const mail = firebase.auth().currentUser.email;
     const username = this.state.username;
 
+    /* Opretter brugeren i databasen med deres id som et child, 
+    fremfor et autogenereret child. Brugeren bliver oprettet med
+    deres mail, brugernevn samt adminTeams (bøderkasser de opretter)
+    */
     firebase.database().ref().child('users').child(userId).set({
       email: mail,
       adminTeams: null,
@@ -114,7 +122,7 @@ export default class SignUpForm extends Component {
           );
         }
       }
-
+  //Styling til siden
 const styles = StyleSheet.create({
   errorTextStyle: {
     fontSize: 20,

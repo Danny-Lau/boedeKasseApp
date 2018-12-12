@@ -8,7 +8,8 @@ export default class AdminFineScreen extends React.Component {
 
   static navigationOptions = {
     title: "Administrere",
-
+     
+    //Styler headeren på siden
     headerStyle: {
       backgroundColor: '#2c3e50'
      },
@@ -26,6 +27,7 @@ export default class AdminFineScreen extends React.Component {
     }  
   }
 
+  //Kører getMyOwnTeams funktionen når siden bliver indlæst
   componentDidMount(){
     this.getMyOwnTeams();
   }
@@ -33,17 +35,25 @@ export default class AdminFineScreen extends React.Component {
   
   getMyOwnTeams(){
 
+    //Henter den nuværende brugers ID ned
     var userId = firebase.auth().currentUser.uid;
     var that = this;
 
+    //Databasekald som henter alle bødekasser ned, som brugeren har oprettet
     return firebase.database().ref('users/' + userId + '/adminTeams').on('value', function (snapshot){
       var myTeams = snapshot.val()
       
+        /*Hvis der returneres null eller undefined (Har ikke oprettet nogle bødekasser)
+          så sætte isAdmin til false
+        */
         if(myTeams == undefined || null){
           that.setState({
             isAdmin: false
           })
 
+          /* Hvis brugeren HAR oprettet minimum en bødekasse, så sættes isAdmin til true
+            og alle hold sættes ind i dataSource
+          */
         } else {
           myTeams = Object.values(snapshot.val());
           that.setState({
@@ -65,7 +75,12 @@ export default class AdminFineScreen extends React.Component {
       )
     }
 
+    //Viser forskellige skærme alt efter om brugeren har oprettet nogle bødekasser
     switch(this.state.isAdmin){
+      /* Hvis brugeren har oprettet bødekasser, så vises de alle sammen i en FlatList.
+         Derudover er der henholdsvis en knap til at joine en bødekasse eller oprette et 
+         ny bødekasse
+      */ 
       case true: {
         return (
           <View style={styles.container}>
@@ -83,7 +98,7 @@ export default class AdminFineScreen extends React.Component {
             keyExtractor={(item, index) => index.toString()}
           />
     
-
+              
               <TouchableOpacity
               style={styles.buttons}>
               <Button 
@@ -105,7 +120,10 @@ export default class AdminFineScreen extends React.Component {
           </View>
         );
       }
-
+      /*Hvis brugeren ikke har oprette nogle bødekasser, så vises der en besked
+        Derudover er der henholdsvis en knap til at joine en bødekasse eller oprette et 
+        ny bødekasse
+      */
       case false: {
         return (
           <View>
@@ -132,12 +150,11 @@ export default class AdminFineScreen extends React.Component {
         </View>
         )
       }
-    }
-    
-      
     }  
-
+  }  
 }
+
+  //Styling af siden
   const styles = StyleSheet.create({
 
     buttons: {

@@ -9,6 +9,7 @@ export default class TeamsFineScreen extends React.Component {
   static navigationOptions = {
     title: "Mine hold",
 
+    //Styling af headeren på siden 
     headerStyle: {
       backgroundColor: '#2c3e50'
      },
@@ -27,23 +28,29 @@ export default class TeamsFineScreen extends React.Component {
     }  
   }
 
+  //Kører getMyTeamsFromApiAsync() når siden indlæses
   componentDidMount() {
     this.getMyTeamsFromApiAsync();
   }
 
   getMyTeamsFromApiAsync(){
-    var userId = firebase.auth().currentUser.uid;
 
+    //Henter den nuværende brugers ID ned
+    var userId = firebase.auth().currentUser.uid;
     var that = this;
 
+    //Henter alle bødekasser som brugeren er medlem af 
     return firebase.database().ref('users/' + userId + '/teams/').on('value', function (snapshot){
       var teams = snapshot.val()
       
+        //Tjekker om brugeren er medlem af nogle bødekasser
         if(teams == undefined || null){
+          //Hvis brugeren ikke er medlem af nogle bøde kasser, så sættes joinedteam til false
           that.setState({
             joinedTeam: false
           })
 
+          // Hvis brugeren ER medlem, så sættes joinedTeam til true og bødekasserne sættes ind i dataSource
         } else {
           teams = Object.values(snapshot.val());
           that.setState({
@@ -64,6 +71,7 @@ export default class TeamsFineScreen extends React.Component {
         </View>     
       )
     }
+    //Hvis brugeren er medlem, så vises alle bødekasser som brugeren er medlem af
     switch (this.state.joinedTeam) {
       case true: {
       return (
@@ -85,6 +93,7 @@ export default class TeamsFineScreen extends React.Component {
       );
         }
 
+      //Hvis brugeren ikke er medlem 
       case false:{
       return(
         <View>
@@ -98,7 +107,7 @@ export default class TeamsFineScreen extends React.Component {
 }
 
 
-
+// styling af siden 
   const styles = StyleSheet.create({
     container: {
       flex: 1,

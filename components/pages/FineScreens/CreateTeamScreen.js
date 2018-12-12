@@ -8,6 +8,7 @@ export default class CreateTeamScreen extends React.Component {
   static navigationOptions = {
     title: "Opret bødekasse",
 
+    //Styling af headeren på siden
     headerStyle: {
       backgroundColor: '#2c3e50'
      },
@@ -26,6 +27,7 @@ export default class CreateTeamScreen extends React.Component {
     }
   }
 
+  ////Kører denne funktion når brugeren trykker på knappen "Tilmeld"
   executefunction(){
     this.createTeam();
     this.props.navigation.navigate('AdminFine');
@@ -40,7 +42,7 @@ export default class CreateTeamScreen extends React.Component {
       return firebase.database().ref('users/' + userId + '/username').once('value', function (snapshot){
         const username  = snapshot.val();
 
-      //Henter brugeren mail
+      //Henter brugerens mail
       return firebase.database().ref('users/' + userId + '/email').once('value', function (snapshot){
         const mail  = snapshot.val();
 
@@ -52,7 +54,7 @@ export default class CreateTeamScreen extends React.Component {
           teamID: 1
 
       
-      //Henter de autogenreret teamID 
+      //Henter det autogenreret teamID 
       //https://stackoverflow.com/questions/16637035/in-firebase-when-using-push-how-do-i-pull-the-unique-id
       }).then((snap) => {
         const key = snap.key 
@@ -108,9 +110,10 @@ export default class CreateTeamScreen extends React.Component {
 
 
   render() {
+      // viser en inputbox, hvor brugeren indtaster navnet til bødekassen
        return (
         <View style={styles.container}>
-            <Text style={styles.teamContent}>Indtast holdnavn</Text>
+            <Text style={styles.teamContent}>Indtast bødekassenavn </Text>
                 <TextInput 
                     style={styles.inputBox}
                   placeholder='Holdnavn'
@@ -132,7 +135,7 @@ export default class CreateTeamScreen extends React.Component {
     );
   }
 }
-
+//Styling af siden
 const styles = StyleSheet.create({
     container: {
       flex: 1,

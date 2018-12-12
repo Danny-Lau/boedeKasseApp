@@ -17,6 +17,7 @@ const Profile = createStackNavigator({
   Profile: { screen: ProfileScreen },
 });
 
+//Muligt at navigere mellem disse sider
 const Fine = createStackNavigator({
   AdminFine: { screen: AdminFineScreen },
   CreateTeam: { screen: CreateTeamScreen},
@@ -28,6 +29,7 @@ const Fine = createStackNavigator({
 
 });
 
+
 const TeamsFine = createStackNavigator({
   TeamScreen: { screen: TeamsScreen },
   SpecificTeam: { screen: SpecificTeamsFineScreen },
@@ -36,6 +38,7 @@ const TeamsFine = createStackNavigator({
   AdminFine: { screen: AdminFineScreen }
 });
 
+//Opretter navigationsbar nederst på siden
 export default createBottomTabNavigator(
   {
     Profil: { screen: Profile },
@@ -53,6 +56,7 @@ export default createBottomTabNavigator(
         const { routeName } = navigation.state;
         var iconName;
 
+        //Tildeler navigationensbaren forskellige iconer
         if (routeName === 'Profil') {
           iconName = 'ios-person';
         }else if (routeName === 'Administrere') {
@@ -63,6 +67,7 @@ export default createBottomTabNavigator(
         return <Ionicons name={iconName} size={25} color={tintColor} />;
       },
     }),
+    //Styler farverne på navigationsbaren 
     tabBarOptions: {
       activeTintColor: 'tomato',
       inactiveTintColor: 'black',

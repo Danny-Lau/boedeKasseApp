@@ -10,6 +10,7 @@ export default class SpecifikUserScreen extends React.Component {
   static navigationOptions = {
     title: 'Brugerens bøder',
 
+    //Styling af headeren på siden 
     headerStyle: {
       backgroundColor: '#2c3e50'
      },
@@ -27,27 +28,31 @@ export default class SpecifikUserScreen extends React.Component {
     }  
   }
 
+  //Kører disse to funktioner når side indlæses
   componentDidMount(){
     this.CheckAdmin();
     this.CheckExistingFines();
 
   }
 
+  //Tjekker om brugeren er admin for bødekassen 
   CheckAdmin(){
     var {navigation} = this.props;
     var teamID = navigation.getParam('teamID', 'no teamID');
     var userID = firebase.auth().currentUser.uid;
     var that = this;
 
+    //Databasekald til at hente bødekassen admin ID ned
     return firebase.database().ref('teams/' + teamID + '/adminID').on('value', function (snapshot){
       var adminID = snapshot.val();
 
-    
-
+      //Hvis brugeren er admin
       if(adminID == userID) {
         that.setState({
           isAdmin: true,
         }); 
+
+        //Hvis brugeren IKKE er admin
         } else {
           that.setState({
             isAdmin: false,
@@ -58,20 +63,24 @@ export default class SpecifikUserScreen extends React.Component {
     
       }
 
+      //Tjekker om brugeren har fået tildelt nogle bøder i forevejen
     CheckExistingFines() {
       const {navigation} = this.props;
       const specificUserID  = navigation.getParam('userID', 'no Id');
       const teamID = navigation.getParam('teamID', 'no teamID');
       var that = this;
       
-        //Tjekker om brugeren har fået tildelt bøder indtil videre
+        //Databasekald til at hente den specifikkes brugeres bøder ned 
         return firebase.database().ref ('teams/' + teamID + '/members/' + specificUserID + '/fines').on('value', function(snapshot){
           var fines = snapshot.val();
    
+          //Hvis brugeren ikke har fået tildelt nogle bøder
           if(fines == undefined || null) {
             that.setState({
               existingFines: false,
             }); 
+
+            //Hvis brugeren har fpet tildelt bøder
           } else {
             var fines = Object.values(snapshot.val());
             that.setState({
@@ -99,15 +108,18 @@ export default class SpecifikUserScreen extends React.Component {
           )
         }
     
+        
         switch (this.state.isAdmin){
           case false: {
             switch(this.state.existingFines){
+              //Hvis brugeren IKKE er Admin og den specifikke bruger IKKE har fået tildelt nogle bøder
               case false: {
                 return(
                   <View>
                   {this.showMessage()}
                   </View>
                 )
+                //Hvis brugeren IKKE er Admin og den specifikke bruger har fået tildelt bøder, så vises bøderne 
                 } case true: {
                   return(
                   <View>
@@ -117,6 +129,9 @@ export default class SpecifikUserScreen extends React.Component {
             }
           } case true: {
             switch(this.state.existingFines){
+              /* Hvis brugeren er Admin og den specifikke bruger IKKE har fået tildelt bøder, 
+                så får admin mulighed for at tildele den specifikke bruger en bøde
+              */
               case false: {
                 return(
                   <View>
@@ -140,6 +155,9 @@ export default class SpecifikUserScreen extends React.Component {
                    
                   </View>
                 )
+                /* Hvis brugeren er Admin og den specifikke bruger har fået tildelt bøder, 
+                så får admin mulighed for at tildele den specifikke bruger en bøde
+                */
                 } case true: {
                   return (
            
@@ -170,7 +188,7 @@ export default class SpecifikUserScreen extends React.Component {
         }
       
       }
-    
+   // Funktionen som bliver kaldt (i switchen) når brugeren ikke fået tildelt bøder 
   showMessage(){
     const {navigation} = this.props;
     const username = navigation.getParam('name', 'No username');
@@ -187,6 +205,7 @@ export default class SpecifikUserScreen extends React.Component {
   }
 
 
+  //Funktionen som bliver kaldt (i switchen),hvis brugeren er fået tildelt bøder
     showFines(){
       const {navigation} = this.props;
       const username = navigation.getParam('name', 'No username');
@@ -213,16 +232,15 @@ export default class SpecifikUserScreen extends React.Component {
             }
             keyExtractor={(item, index) => index.toString()}
           />
-      
-        
             <Text style={styles.fineText}>Total: 
             <Text style={styles.fineTotalText}> {fine} kr.</Text>   
             </Text>          
           </View>
       );
-      } 
-    }
+    } 
+  }
 
+    //Styling af siden
     const styles = StyleSheet.create({
       buttons: {
         height: 45,

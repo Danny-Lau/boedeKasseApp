@@ -8,6 +8,7 @@ export default class AddMembersScreen extends React.Component {
     static navigationOptions = {
         title: "Vælg hold",
 
+        //Styling af headeren på siden 
         headerStyle: {
             backgroundColor: '#2c3e50'
            },
@@ -24,21 +25,21 @@ export default class AddMembersScreen extends React.Component {
             error: null,
     }
 }
-
+//Kører denne funktion når siden indlæses
 componentDidMount(){
-
     this.getTeams();
-
   }
 
 //Henter alle hold ned
 getTeams() {
     var that = this; 
 
+    //Databasekald som henter alle bødekasserne ned
     return firebase.database().ref('teams').on('value', function (snapshot){
         var teams = Object.values(snapshot.val());
 
         that.setState({
+            //Sætter teams ind i dataSource
             dataSource: teams,
             isloading: false,
         })
@@ -50,8 +51,6 @@ getTeams() {
 
 
 render(){
-
-
     if(this.state.isloading) {
         return (
             <View style={{ flex: 1, padding: 20, justifyContent: 'center', alignItems: 'stretch' }}>
@@ -59,6 +58,7 @@ render(){
             </View>     
           )
         }
+        //Viser alle hold i en FlatList
         return (
             <View>    
             <FlatList

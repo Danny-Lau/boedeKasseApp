@@ -10,6 +10,7 @@ export default class ProfileScreen extends React.Component {
   static navigationOptions = {
     title: "Min Profil",
 
+    //Design til headeren på siden 
     headerStyle: {
       backgroundColor: '#2c3e50'
      },
@@ -20,9 +21,6 @@ export default class ProfileScreen extends React.Component {
     
   };
   
-
-
-
   render() {   
 
     return(
@@ -42,6 +40,7 @@ export default class ProfileScreen extends React.Component {
 }
 }
 
+  //Styling til siden  
 const styles = StyleSheet.create({
 container: {
  flex: 1,
