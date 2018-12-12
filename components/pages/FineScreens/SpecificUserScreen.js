@@ -43,7 +43,7 @@ export default class SpecifikUserScreen extends React.Component {
     var that = this;
 
     //Databasekald til at hente bødekassen admin ID ned
-    return firebase.database().ref('teams/' + teamID + '/adminID').on('value', function (snapshot){
+    return firebase.database().ref('teams/' + teamID + '/adminID').once('value', function (snapshot){
       var adminID = snapshot.val();
 
       //Hvis brugeren er admin
@@ -71,7 +71,7 @@ export default class SpecifikUserScreen extends React.Component {
       var that = this;
       
         //Databasekald til at hente den specifikkes brugeres bøder ned 
-        return firebase.database().ref ('teams/' + teamID + '/members/' + specificUserID + '/fines').on('value', function(snapshot){
+        return firebase.database().ref ('teams/' + teamID + '/members/' + specificUserID + '/fines').once('value', function(snapshot){
           var fines = snapshot.val();
    
           //Hvis brugeren ikke har fået tildelt nogle bøder
