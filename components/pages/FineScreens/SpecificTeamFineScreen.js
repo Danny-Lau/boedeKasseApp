@@ -84,7 +84,7 @@ export default class SpecificTeamFineScreen extends React.Component {
                 title={item.name +'  ' + '(' + item.email + ')' } 
                 titleStyle={{ color: 'black', fontWeight: 'bold' }}
                 subtitleStyle={{ color: 'tomato' }}
-                subtitle={item.totalFine + ' kr. '}    
+                subtitle={item.totalFine + ' kr. ' }  
                 chevronColor='#2c3e50'
                 onPress={() => this.props.navigation.navigate('SpecificUser', item )}
              

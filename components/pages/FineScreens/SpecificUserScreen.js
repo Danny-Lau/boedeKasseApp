@@ -28,13 +28,17 @@ export default class SpecifikUserScreen extends React.Component {
     }  
   }
 
-  //Kører disse to funktioner når side indlæses
-  componentDidMount(){
-    this.CheckAdmin();
-    this.CheckExistingFines();
-
+    //Kører disse to funktioner når side indlæses
+    componentDidMount(){
+      this.CheckAdmin();
+      this.CheckExistingFines();
   }
 
+  PayFine(){
+    this.ClearFine();
+    this.props.navigation.navigate('SpecificTeam');
+
+  }
   //Tjekker om brugeren er admin for bødekassen 
   CheckAdmin(){
     var {navigation} = this.props;
@@ -90,6 +94,24 @@ export default class SpecifikUserScreen extends React.Component {
             });
           }
         });
+      }
+
+      //Alle brugerens bøder i bødekassen
+      ClearFine(){
+        const {navigation} = this.props;
+        const specificUserID  = navigation.getParam('userID', 'no Id');
+        const teamID = navigation.getParam('teamID', 'no teamID');
+
+        firebase.database().ref('teams/' + teamID + '/members/' + specificUserID + '/fines').remove()
+
+        firebase.database().ref('teams/' + teamID + '/members/' + specificUserID).update({
+          totalFine: 0
+        })
+    
+        alert('Bøden er nu betalt')
+      
+
+
       }
    
   
@@ -151,6 +173,8 @@ export default class SpecifikUserScreen extends React.Component {
                           color='white'
                       /> 
                   </TouchableOpacity>
+
+        
                   />
                    
                   </View>
@@ -173,12 +197,21 @@ export default class SpecifikUserScreen extends React.Component {
                               name: username,
                               totalFine: totalFine,
                               specificUserID: specificUserID
-                            });
+                            }); 
                             }}         
                             title="Tildel bøde"
                             color='white'
                           /> 
                         </TouchableOpacity>
+
+                        <TouchableOpacity
+                          style={styles.buttons}>
+                          <Button 
+                          onPress={this.PayFine.bind(this)}  
+                          title="Betal bøde"
+                          color='white'
+                      /> 
+                  </TouchableOpacity>
     
                   </View>
                   )
