@@ -97,7 +97,7 @@ export default class TeamsFineScreen extends React.Component {
       case false:{
       return(
         <View>
-          <Text style={styles.text}>Du er desværre ikke tilmeldt nogle bødekasser endnu</Text>
+          <Text style={styles.text}>Du er desværre ikke tilmeldt nogle fælleskasser endnu</Text>
         </View>
       )
       }

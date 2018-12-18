@@ -65,12 +65,12 @@ onButtonPress(){
                     teamID: teamID
                 })
     
-                alert('Du er nu tilmeldt bødekassen ' + teamName)
+                alert('Du er nu tilmeldt fælleskassen ' + teamName)
             })  
         });  
       } else {
         //Hvis brugeren er tilmeldt bødekassen så visses denn besked
-        alert('Du er allerede tilmeldt denne bødekassen')
+        alert('Du er allerede tilmeldt denne fælleskassen')
       }
   })
 })
@@ -83,7 +83,7 @@ onButtonPress(){
         //Spørger om bruger er sikker på at tilmelde sig bødekasen. Dette kan bekræftes ved at brugen trykker "Tilmeld"
         return (
             <View>
-              <Text style={styles.text}>Er du sikker på, at du vil tilmelde dig bødekassen "{name}"?</Text>
+              <Text style={styles.text}>Er du sikker på, at du vil tilmelde dig fælleskassen "{name}"?</Text>
               
               <TouchableOpacity
               style={styles.buttons}>

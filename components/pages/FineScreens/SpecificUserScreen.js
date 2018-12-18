@@ -108,7 +108,7 @@ export default class SpecifikUserScreen extends React.Component {
           totalFine: 0
         })
     
-        alert('Bøden er nu betalt')
+        alert('Bøløbet er nu betalt')
       
 
 
@@ -169,7 +169,7 @@ export default class SpecifikUserScreen extends React.Component {
                             specificUserID: specificUserID
                           });
                           }}         
-                          title="Tildel bøde"
+                          title="Opkræv betaling"
                           color='white'
                       /> 
                   </TouchableOpacity>
@@ -199,7 +199,7 @@ export default class SpecifikUserScreen extends React.Component {
                               specificUserID: specificUserID
                             }); 
                             }}         
-                            title="Tildel bøde"
+                            title="Opkræv betaling"
                             color='white'
                           /> 
                         </TouchableOpacity>
@@ -232,7 +232,7 @@ export default class SpecifikUserScreen extends React.Component {
     }
     return (
       <View>
-        <Text style={styles.text}> {username} er ikke blevet tildelt nogle bøder endnu!</Text>
+        <Text style={styles.text}> {username} er ikke blevet opkrvet nogle betalinger endnu!</Text>
       </View>
     )
   }
@@ -250,7 +250,7 @@ export default class SpecifikUserScreen extends React.Component {
       }
         return (
           <View>
-            <Text style={styles.nameText}> {username} har fået bøder for:</Text>
+            <Text style={styles.nameText}> {username} har fået opkrævet betaling for:</Text>
             <FlatList
             data={this.state.dataSource}
             renderItem={({ item }) =>

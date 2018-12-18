@@ -103,7 +103,7 @@ export default class AdminFineScreen extends React.Component {
               style={styles.buttons}>
               <Button 
                 onPress={() => this.props.navigation.navigate('CreateTeam')}            
-                title="Opret ny bødekasse"
+                title="Opret ny fælleskasse"
                 color='white'
               /> 
               </TouchableOpacity> 
@@ -112,7 +112,7 @@ export default class AdminFineScreen extends React.Component {
                 style={styles.buttons}>
                 <Button 
                   onPress= {() => this.props.navigation.navigate('JoinTeam')}         
-                  title="Join bødekasse"
+                  title="Join fælleskase"
                   color='white'
                 /> 
               </TouchableOpacity>
@@ -134,7 +134,7 @@ export default class AdminFineScreen extends React.Component {
               style={styles.buttons}>
               <Button 
                 onPress={() => this.props.navigation.navigate('CreateTeam')}            
-                title="Opret ny bødekasse"
+                title="Opret ny fælleskasse"
                 color='white'
               /> 
           </TouchableOpacity> 
@@ -143,7 +143,7 @@ export default class AdminFineScreen extends React.Component {
               style={styles.buttons}>
               <Button 
                 onPress= {() => this.props.navigation.navigate('JoinTeam')}         
-                title="Join bødekasse"
+                title="Join fælleskasse"
                 color='white'
               /> 
           </TouchableOpacity>

@@ -113,7 +113,7 @@ export default class CreateTeamScreen extends React.Component {
       // viser en inputbox, hvor brugeren indtaster navnet til bødekassen
        return (
         <View style={styles.container}>
-            <Text style={styles.teamContent}>Indtast bødekassenavn </Text>
+            <Text style={styles.teamContent}>Indtast navnet på fælleskassen </Text>
                 <TextInput 
                     style={styles.inputBox}
                   placeholder='Holdnavn'

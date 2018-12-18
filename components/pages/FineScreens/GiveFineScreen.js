@@ -61,7 +61,7 @@ export default class GiveFineScreen extends React.Component {
             totalFine: updateFine
         })
 
-        alert('Bøden er blevet tildelt ' + username)
+        alert('Opkrævningen er sendt til ' + username)
 
     }).catch ((error) => {
         console.log('error' , error)
@@ -75,7 +75,7 @@ export default class GiveFineScreen extends React.Component {
        return (
          //Viser en inputbox til at skrive årsagen til bøde og en anden til at angive bødensstørrelse
         <View style={styles.container}>
-            <Text style={styles.fineContent}>Årsag til bøden</Text>
+            <Text style={styles.fineContent}>Årsag til opkrævning</Text>
                 <TextInput 
                     style={styles.inputBox}
                   placeholder='Årsag'
@@ -85,7 +85,7 @@ export default class GiveFineScreen extends React.Component {
                 />
 
                 
-                <Text style={styles.fineContent}>Bøde</Text>
+                <Text style={styles.fineContent}>Beløb</Text>
                 <TextInput 
                     style={styles.inputBox} 
                     keyboardType = 'numeric'
